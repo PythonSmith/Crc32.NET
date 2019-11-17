@@ -11,7 +11,7 @@ using E = Crc32C.Crc32CAlgorithm;
 namespace Force.Crc32.Tests
 {
 	[TestFixture]
-	public class ImplementationCTest
+	public class ImplementationCTest3
 	{
 #if !NETCOREAPP
 		[TestCase("Hello", 3)]
@@ -32,9 +32,9 @@ namespace Force.Crc32.Tests
 		[Test]
 		public void ResultConsistency2()
 		{
-			Assert.That(Crc32CAlgorithm.Compute(new byte[] { 1 }), Is.EqualTo(0xA016D052));
-			Assert.That(Crc32CAlgorithmHW.Compute(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 }), Is.EqualTo(1183391617));
-			Assert.That(Crc32CAlgorithm.Compute(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }), Is.EqualTo(0xB219DB69));
+			Assert.That(Crc32CAlgorithmHW.Compute(new byte[] { 1 }), Is.EqualTo(0xA016D052));
+			Assert.That(Crc32CAlgorithmHW.Compute(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8}), Is.EqualTo(1183391617));
+			Assert.That(Crc32CAlgorithmHW.Compute(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }), Is.EqualTo(0xB219DB69));
 		}
 
 #if !NETCOREAPP
@@ -59,9 +59,9 @@ namespace Force.Crc32.Tests
 		{
 			var bytes = new byte[30000];
 			new Random().NextBytes(bytes);
-			var r1 = Crc32CAlgorithm.Append(0, bytes, 0, 15000);
-			var r2 = Crc32CAlgorithm.Append(r1, bytes, 15000, 15000);
-			var r3 = Crc32CAlgorithm.Append(0, bytes, 0, 30000);
+			var r1 = Crc32CAlgorithmHW.Append(0, bytes, 0, 15000);
+			var r2 = Crc32CAlgorithmHW.Append(r1, bytes, 15000, 15000);
+			var r3 = Crc32CAlgorithmHW.Append(0, bytes, 0, 30000);
 			Assert.That(r2, Is.EqualTo(r3));
 		}
 
@@ -70,8 +70,8 @@ namespace Force.Crc32.Tests
 		{
 			var bytes = new byte[30000];
 			new Random().NextBytes(bytes);
-			var crc1 = Crc32CAlgorithm.Append(0, bytes, 0, bytes.Length);
-			var crc2Bytes = new Crc32CAlgorithm().ComputeHash(bytes);
+			var crc1 = Crc32CAlgorithmHW.Append(0, bytes, 0, bytes.Length);
+			var crc2Bytes = new Crc32CAlgorithmHW().ComputeHash(bytes);
 			if (BitConverter.IsLittleEndian) crc2Bytes = crc2Bytes.Reverse().ToArray();
 			var crc2 = BitConverter.ToUInt32(crc2Bytes, 0);
 			Assert.That(crc2, Is.EqualTo(crc1));
@@ -94,17 +94,17 @@ namespace Force.Crc32.Tests
 			var r = new Random();
 			r.NextBytes(buf);
 			Crc32CAlgorithm.ComputeAndWriteToEnd(buf);
-			Assert.That(Crc32CAlgorithm.IsValidWithCrcAtEnd(buf), Is.True);
+			Assert.That(Crc32CAlgorithmHW.IsValidWithCrcAtEnd(buf), Is.True);
 			buf[r.Next(buf.Length)] ^= 0x1;
-			Assert.That(Crc32CAlgorithm.IsValidWithCrcAtEnd(buf), Is.False);
+			Assert.That(Crc32CAlgorithmHW.IsValidWithCrcAtEnd(buf), Is.False);
 
 			// partial test
 			if (length > 2)
 			{
 				Crc32CAlgorithm.ComputeAndWriteToEnd(buf, 1, length - 2);
-				Assert.That(Crc32CAlgorithm.IsValidWithCrcAtEnd(buf, 1, length - 2 + 4), Is.True);
+				Assert.That(Crc32CAlgorithmHW.IsValidWithCrcAtEnd(buf, 1, length - 2 + 4), Is.True);
 				buf[1 + r.Next(buf.Length - 2)] ^= 0x1;
-				Assert.That(Crc32CAlgorithm.IsValidWithCrcAtEnd(buf, 1, length - 2 + 4), Is.False);
+				Assert.That(Crc32CAlgorithmHW.IsValidWithCrcAtEnd(buf, 1, length - 2 + 4), Is.False);
 			}
 		}
 	}

@@ -18,7 +18,7 @@ namespace Force.Crc32
 		/// </summary>
 		public Crc32CAlgorithm()
 		{
-#if !NETCORE13
+#if !NETSTANDARD1_3
 			HashSizeValue = 32;
 #endif
 		}

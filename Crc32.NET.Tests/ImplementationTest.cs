@@ -4,7 +4,7 @@ using System.Text;
 
 using NUnit.Framework;
 
-#if !NETCORE
+#if !NETCOREAPP
 using E = Crc32.Crc32Algorithm;
 #endif
 
@@ -15,7 +15,7 @@ namespace Force.Crc32.Tests
 	public class ImplementationTest
 	{
 
-#if !NETCORE
+#if !NETCOREAPP
 		[TestCase("Hello", 3)]
 		[TestCase("Nazdar", 0)]
 		[TestCase("Ahoj", 1)]
@@ -30,7 +30,7 @@ namespace Force.Crc32.Tests
 			Assert.That(crc2, Is.EqualTo(crc1));
 		}
 #endif
-		
+
 		[Test]
 		public void ResultConsistency2()
 		{
@@ -38,7 +38,7 @@ namespace Force.Crc32.Tests
 			Assert.That(Crc32Algorithm.Compute(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }), Is.EqualTo(622876539));
 		}
 
-#if !NETCORE
+#if !NETCOREAPP
 		[Test]
 		public void ResultConsistencyAsHashAlgorithm()
 		{
@@ -52,7 +52,7 @@ namespace Force.Crc32.Tests
 			Console.WriteLine(crc2.ToString("X8"));
 			Assert.That(crc1, Is.EqualTo(crc2));
 		}
-#endif	
+#endif
 
 		[Test]
 		public void PartIsWhole()

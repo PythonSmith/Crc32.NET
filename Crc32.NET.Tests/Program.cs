@@ -5,7 +5,7 @@
 		public static void Main()
 		{
 			var pt = new PerformanceTest();
-#if !NETCORE
+#if !NETCOREAPP
 			pt.ThroughputCrc32_By_dariogriffo();
 			pt.ThroughputCHCrc32_By_tanglebones();
             pt.ThroughputKlinkby_Checksum();
@@ -19,8 +19,11 @@
 			pt.ThroughputCrc32C_Standard();
 			pt.ThroughputCrc32C_By_Me();
 			pt.ThroughputCrc32_By_Me();
+#if NETCOREAPP3_0
+			pt.ThroughputCrc32C_By_PythonSmith_Hash_Crc();
+#endif
 #endif
 
-        }
-    }
+		}
+	}
 }

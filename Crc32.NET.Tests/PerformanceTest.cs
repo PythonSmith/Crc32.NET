@@ -8,7 +8,7 @@ namespace Force.Crc32.Tests
 	[TestFixture]
 	public class PerformanceTest
 	{
-#if !NETCORE
+#if !NETCOREAPP
 		[Test]
 		public void ThroughputCHCrc32_By_tanglebones()
 		{
@@ -50,6 +50,8 @@ namespace Force.Crc32.Tests
 		{
 			Calculate(new Crc32C_Standard());
 		}
+
+
 #endif
 	
 		[Test]
@@ -70,11 +72,20 @@ namespace Force.Crc32.Tests
 			Calculate(new Force_Crc32_Crc32CAlgorithm());
 		}
 
-#if COREVERSION && !NETCORE13
+
+
+#if COREVERSION && !NETSTANDARD1_3
 		[Test]
 		public void ThroughputCrc32C_By_K4os_Hash_Crc()
 		{
 			Calculate(new K4os_Hash_Crc());
+		}
+#endif
+#if NETCOREAPP3_0
+		[Test]
+		public void ThroughputCrc32C_By_PythonSmith_Hash_Crc()
+		{
+			Calculate(new Force_Crc32_Crc32CAlgorithmHW());
 		}
 #endif
 
