@@ -63,10 +63,10 @@ Library | Speed
 This library | **1170** MB/s
 
 #### Results on my machine (Windows 10 Pro 1903 in KVM with i7-7700k@4.2Ghz with DDR4-3200 Dual Channel)
-dotnet .\Crc32.NET.Tests.dll
-Crc32C.Standard Throughput: 1035,3 MB/s
-Force.Crc32.Crc32CAlgorithm Throughput: 1300,2 MB/s
-Force.Crc32.Crc32Algorithm Throughput: 1295,1 MB/s
+dotnet .\Crc32.NET.Tests.dll  
+Crc32C.Standard Throughput: 1035,3 MB/s  
+Force.Crc32.Crc32CAlgorithm Throughput: 1300,2 MB/s  
+Force.Crc32.Crc32Algorithm Throughput: 1295,1 MB/s  
 Force.Crc32.Crc32CAlgorithm_HW Throughput: 11143,1 MB/s (Speedup of 8x)
 
 ## Some notes
