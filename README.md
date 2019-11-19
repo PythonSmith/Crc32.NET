@@ -37,6 +37,10 @@ if (!Crc32Algorithm.IsValidWithCrcAtEnd(inputArray))
 
 In other words, you should pass some input buffer to calculation function and it will write CRC data at last 4 bytes. After that, when you need validation, you should pass this buffer to validation function and it will return _is data correct_.
  
+### Version 1.3.0 Remarks
+Added extra version for .Net Core 3 with super-fast hardware-supported CRC32C generation
+Just replace Crc32CAlgorithm with Crc32CAlgorithmHW and enjoy fast speeds - even in an managed language
+
 
 ## Description
 
@@ -57,6 +61,13 @@ Library | Speed
 [Dexiom.QuickCrc32](https://github.com/Dexiom/Dexiom.QuickCrc32/) by Jonathan Paré | 364 MB/s
 [K4os.Hash.Crc](https://github.com/MiloszKrajewski/K4os.Hash.Crc) by Milosz Krajewski  | 399 MB/s
 This library | **1170** MB/s
+
+#### Results on my machine (Windows 10 Pro 1903 in KVM with i7-7700k@4.2Ghz with DDR4-3200 Dual Channel)
+dotnet .\Crc32.NET.Tests.dll
+Crc32C.Standard Throughput: 1035,3 MB/s
+Force.Crc32.Crc32CAlgorithm Throughput: 1300,2 MB/s
+Force.Crc32.Crc32Algorithm Throughput: 1295,1 MB/s
+Force.Crc32.Crc32CAlgorithm_HW Throughput: 11143,1 MB/s (Speedup of 8x)
 
 ## Some notes
 
